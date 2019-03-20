@@ -4,5 +4,6 @@
     "port": 27017,
     "user": "root",
     "password": ""
-  }
+  },
+  "secret": "someString"
 }
