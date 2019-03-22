@@ -9,7 +9,7 @@ const config = require('../config');
 const signupValidator = (req, res, next) => {
   const schema = joi.object().keys({
     name: joi.string().required(),
-    email: joi.email().required(),
+    email: joi.string().email().required(),
     password: joi.string().required(),
     confPassword: joi.string().valid(joi.ref('password')),
   });
