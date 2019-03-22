@@ -20,7 +20,18 @@ Endpoints:
         token: string
     }
     ```
+---
+GET /gallery/images
+```
+[
+    'url1',
+    'url2',
+    'url3',
+    ...
+]
+```
 
+------
 * POST /contact-us - send data to Admin e-mail
     ```
     {
