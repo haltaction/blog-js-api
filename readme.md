@@ -8,6 +8,7 @@ Endpoints:
         password_conf: string
     }
     ```
+
 * POST /signin
     ```
     {
@@ -18,6 +19,19 @@ Endpoints:
     if OK than returns 
     {
         token: string
+    }
+    ```
+
+* Get /me
+    ```
+    header 'X-Auth-Token': string from /signin endpoint
+    
+    returns 
+    {
+        "name": "test",
+        "email": "test@test.com",
+        "role": "user",
+        "createdAt": "2019-04-08T19:07:23.669Z"
     }
     ```
 ---

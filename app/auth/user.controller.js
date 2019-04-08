@@ -77,4 +77,26 @@ router.post('/signin', [signinValidator, async (req, res, next) => {
   });
 }]);
 
+router.get('/me', async (req, res, next) => {
+  const token = req.get('X-Auth-Token');
+  let payload;
+
+  try {
+    payload = jwt.verify(token, config.secret)
+  } catch (error) {
+    console.error(error);
+    return res.status(401).send('Invalid "X-Auth-Token"');
+  }
+
+  const user = await User.findOne(
+    {
+      email: payload.email
+    },
+    '-_id name email role createdAt'
+  ).exec();
+
+
+  return res.send(user);
+});
+
 module.exports = router;
