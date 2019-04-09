@@ -12,7 +12,7 @@ const articlesValidator = (req, res, next) => {
     title: joi.string().min(3).max(200).required(),
     description: joi.string().required(),
     shortDescription: joi.string().required(),
-    imagesUrls: joi.array().items(joi.string()).max(5).required(),
+    imagesUrls: joi.array().items(joi.string().uri()).max(5).required(),
     location: joi.string(),
   });
 
@@ -49,6 +49,29 @@ router.post('/articles', [authChecker, articlesValidator, (req, res, next) => {
     return res.status(500).send({ message: 'error saving data' });
   });
 }]);
+
+router.get('/articles', async (req, res, next) => {
+  const articles = await Article.find({}, '-updatedAt -__v').exec();
+
+  return res.send(articles);
+});
+
+router.get('/articles/:id', async (req, res, next) => {
+  const id = req.params.id;
+  let article;
+
+  if (!id) {
+    res.status(404);
+  }
+
+  try {
+    article = await Article.findById(id, '-updatedAt -__v').exec();
+  } catch (e) {
+    res.status(500).send();
+  }
+
+  return res.send(article);
+});
 
 async function hasUserRole(token, roleName) {
   if (!token || !roleName) {
