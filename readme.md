@@ -22,7 +22,7 @@ Endpoints:
     }
     ```
 
-* Get /me
+* GET /me
     ```
     header 'X-Auth-Token': string from /signin endpoint
     
@@ -35,17 +35,17 @@ Endpoints:
     }
     ```
 ---
-GET /gallery/images
-```
-[
-    'url1',
-    'url2',
-    'url3',
-    ...
-]
-```
+* GET /gallery/images
+    ```
+    [
+        'url1',
+        'url2',
+        'url3',
+        ...
+    ]
+    ```
 
-------
+---
 * POST /contact-us - send data to Admin e-mail
     ```
     {
@@ -55,3 +55,37 @@ GET /gallery/images
         message: string
     }
     ```
+---
+* POST /articles
+    ```
+    {
+        title: string
+        description: string
+        shortDescription: string
+        imagesUrls: [
+            url: string
+        ]
+        location: string
+    }
+    ```
+
+
+* GET /articles
+    ```
+    [
+        {
+            title: string
+            description: string
+            shortDescription: string
+            imagesUrls: [
+                url: string
+            ]
+            location: string
+        },
+        ...
+    ]
+    ```
+
+
+* GET /articles/:id
+

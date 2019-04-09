@@ -11,6 +11,7 @@ const port = process.env.PORT || 9000;
 const authController = require('./auth/user.controller');
 const galleryController = require('./gallery/gallery.controller');
 const contactUsController = require('./contact-us/contact-us.controller');
+const articlesController = require('./articles/articles.controller');
 
 app.get('/', (req, res) => res.send('test'));
 
@@ -21,5 +22,6 @@ app.use('/public', express.static(path.join(__dirname, '/data/gallery-img')));
 app.use(authController);
 app.use(galleryController);
 app.use(contactUsController);
+app.use(articlesController);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
