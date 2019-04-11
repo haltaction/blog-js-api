@@ -13,7 +13,7 @@ router.get('/gallery/images', async (req, res, next) => {
 
     return res.send(imagesPaths);
   } catch (error) {
-    console.error(error);
+    console.error('gallery', error);
     return res.status(500).send();
   }
 });

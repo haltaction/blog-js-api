@@ -8,7 +8,7 @@ const utils = require('../utils');
 const seedData = {
   name: 'Admin',
   email: 'secret@mail.xyz',
-  passwordHash: utils.getHash('Qwerty0'),
+  passwordHash: utils.getHash('Qwerty2019'),
   role: 'admin'
 };
 
