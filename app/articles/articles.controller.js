@@ -6,6 +6,7 @@ const User = require('./../auth/user.model');
 const utils = require('../utils');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const mongoose = require('mongoose');
 
 const articlesValidator = (req, res, next) => {
   const schema = joi.object().keys({
@@ -61,13 +62,16 @@ router.get('/articles/:id', async (req, res, next) => {
   let article;
 
   if (!id) {
-    res.status(404);
+    return res.status(404);
   }
 
   try {
     article = await Article.findById(id, '-updatedAt -__v').exec();
-  } catch (e) {
-    res.status(500).send();
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      return res.status(404).send();
+    }
+    return res.status(500).send();
   }
 
   return res.send(article);
