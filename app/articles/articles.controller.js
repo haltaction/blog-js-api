@@ -77,6 +77,48 @@ router.get('/articles/:id', async (req, res, next) => {
   return res.send(article);
 });
 
+router.put('/articles/:id', [authChecker, articlesValidator, async (req, res, next) => {
+  const id = req.params.id;
+  let article;
+  const updatedArticle = req.body;
+
+  try {
+    article = await Article.findById(id, '-updatedAt -__v').exec();
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      return res.status(404).send();
+    }
+    return res.status(500).send();
+  }
+
+  Object.assign(article, updatedArticle);
+
+  return article.save().then((updatedArticle) => {
+    return res.send(updatedArticle);
+  }).catch((error) => {
+    return res.status(500).send({ message: 'error updating data' });
+  });
+}]);
+
+router.delete('/articles/:id', [authChecker, async (req, res, next) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(404);
+  }
+
+  try {
+    await Article.deleteOne({ _id: id }).exec();
+  } catch (error) {
+    if (error instanceof mongoose.CastError) {
+      return res.status(404).send();
+    }
+    return res.status(500).send();
+  }
+
+  return res.send({ message: 'successfully delete' });
+}]);
+
 async function hasUserRole(token, roleName) {
   if (!token || !roleName) {
     return false

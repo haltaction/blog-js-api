@@ -87,5 +87,21 @@ Endpoints:
     ```
 
 
-* GET /articles/:id
+* PUT /articles/:id - update article, 
+    accept next data:
+    ```
+    {
+        "imagesUrls": [
+            "url1", "url2"
+        ],
+        "title": "test",
+        "description": "new descr",
+        "shortDescription": "updated"
+    }
+
+    ```
+    returns updated article
+
+* DELETE /articles/:id - delete article, 
+
 
